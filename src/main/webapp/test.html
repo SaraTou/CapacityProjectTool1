@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table Pagination</title>
+
+    <link href="bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body ng-app="MonApp" ng-controller="Controleur1">
+<div class="datagrid">
+<div class="container" style="margin-top:35px">
+    <h4>Select Number of Rows</h4>
+    <div class="form-group">
+        <select name="state" id="maxRows" class="form-control" style="width:150px;">
+            <option value="5000">Show All</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="75">75</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <table id="mytable" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Pm id</th>
+            <th>Pm code</th>
+            <th>Pm first name</th>
+            <th>Pm lastname</th>
+            <th>Pm team</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="manager in managers">
+            <td>{{manager.pm_id}}</td>
+            <td>{{manager.pm_code}}</td>
+            <td>{{manager.pm_firstname}}</td>
+            <td>{{manager.pm_lastname}}</td>
+            <td>{{manager.pm_team}}</td>
+            <td>
+                <button ng-click="editer(manager)">Update</button>
+                <button ng-click="supprimer(manager)">Deactivated</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+<!-- MODIFIER UN MANAGER        -->
+<div class="datagrid">
+    <table>
+        <thead><tr><th>Update</th><tr></thead>
+         <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right"><button ng-click="validerEdition()">editer</button></button></div></tr></tfoot>
+        <tbody>
+        <tr><td><label>PM id</label><br><input ng-model="manager.pm_id" disabled></input><br>
+            <label>PM code</label><br><input ng-model="manager.pm_code"></input><br>
+            <label>PM first name</label><br><input ng-model="manager.pm_firstname"></input><br>
+            <label>PM last name</label><br><input ng-model="manager.pm_lastname"></input><br>
+            <label>PM team</label><br><input ng-model="manager.pm_team"></input><br></td></tr>
+        </tbody>
+    </table>
+</div><br><br>
+</div>
+<!-- CREER UN MANAGER       -->
+<div class="datagrid">
+    <table>
+        <thead><tr><th>Create</th><tr></thead>
+        <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right" ng-click="ajouter()"><button>ajouter</button></button></div></tr></tfoot>
+        <tbody>
+        <tr><td>
+            <label>PM first name</label><br><input ng-model="nouvelManager.pm_firstname"></input><br>
+            <label>PM last name</label><br><input ng-model="nouvelManager.pm_lastname"></input><br>
+            <label>PM team</label><br><input ng-model="nouvelManager.pm_team"></input><br></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script>
+    var table = '#mytable'
+    $('#maxRows').on('change', function(){
+        $('.pagination').html('')
+        var trnum = 0
+        var maxRows = parseInt($(this).val())
+        var totalRows = $(table+' tbody tr').length
+        $(table+' tr:gt(0)').each(function(){
+            trnum++
+            if(trnum > maxRows){
+                $(this).hide()
+            }
+            if(trnum <= maxRows){
+                $(this).show()
+            }
+        })
+        if(totalRows > maxRows){
+            var pagenum = Math.ceil(totalRows/maxRows)
+            for(var i=1;i<=pagenum;){
+                $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
+            }
+        }
+        $('.pagination li:first-child').addClass('active')
+        $('.pagination li').on('click',function(){
+            var pageNum = $(this).attr('data-page')
+            var trIndex = 0;
+            $('.pagination li').removeClass('active')
+            $(this).addClass('active')
+            $(table+' tr:gt(0)').each(function(){
+                trIndex++
+                if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+                    $(this).hide()
+                } else{
+                    $(this).show()
+                }
+            })
+        })
+    })
+
+</script>
+</body>
+</html>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+    .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #318da6; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }  .datagrid table td, .datagrid table th { padding: 3px 10px; }  .datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #318da6), color-stop(1, #318da6) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #BF691E; }  .datagrid table thead th:first-child { border: none; }  .datagrid table tbody td { color: #318da6; border-left: 1px solid #D9CFB8;font-size: 12px;font-weight: normal; }  .datagrid table tbody .alt td { background: #F0E5CC; color: #7F4614; }  .datagrid table tbody td:first-child { border-left: none; }    .datagrid table tfoot td div { border-top: 1px solid #A65B1A;background: #F0E5CC;}  .datagrid table tfoot td { padding: 0; font-size: 12px }  .datagrid table tfoot td div{ padding: 2px; }  .datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }  .datagrid table tfoot  li { display: inline; }  .datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #A65B1A;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #A65B1A), color-stop(1, #7F4614) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; }  .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #7F4614; color: #FFFFFF; background: none; background-color:#A65B1A;}  div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+</style>
