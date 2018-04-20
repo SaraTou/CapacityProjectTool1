@@ -9,6 +9,9 @@ angular.module('MonApp', [])
                 $http.get('rest/domains/totalDomains').then(function(data){
                 $scope.domains = data.data;
                 })
+            $http.get('rest/nessies/totalNessies').then(function(data){
+                $scope.nessies = data.data;
+            })
        };
 
         $scope.validerEdition = function(){
@@ -27,6 +30,13 @@ angular.module('MonApp', [])
                 rafraichirLeTableau();
             })
         }
+        $scope.validerEditionNessie = function() {
+            $http.post('rest/nessies/validerEditionNessie/',$scope.nessie).then(function(data){
+                alert('Nessie Updated');
+
+                rafraichirLeTableau();
+            })
+        }
         $scope.editer = function(manager){
             $http.get('rest/managers/getManagerParId/'+manager.pm_id).then(function(data){
                 $scope.manager = data.data;
@@ -39,6 +49,11 @@ angular.module('MonApp', [])
 
             })
 
+        }
+        $scope.editerNessie = function(nessie) {
+            $http.get('rest/nessies/getNessieParId/' + nessie.ne_id).then(function (data) {
+                $scope.nessie = data.data;
+            })
         }
         $scope.ajouter = function(){
             $http.post('rest/managers/ajouterManager/',$scope.nouvelManager).then(function(data){
@@ -55,9 +70,22 @@ angular.module('MonApp', [])
             })
 
         }
+        $scope.ajouterNessie = function(){
+            $http.post('rest/nessies/ajouterNessie/',$scope.nouvelNessie).then(function(data){
+                alert('inserted');
+                rafraichirLeTableau();
+            })
+        }
 
         $scope.supprimerDomain = function () {
             $http.get('rest/domains/supprimerDomainParId'+domain.d_id).then(function(data){
+                alert('deleted');
+                rafraichirLeTableau();
+            })
+
+        }
+        $scope.supprimerNessie = function () {
+            $http.get('rest/nessies/supprimerNessieParId'+nessie.ne_id).then(function(data){
                 alert('deleted');
                 rafraichirLeTableau();
             })

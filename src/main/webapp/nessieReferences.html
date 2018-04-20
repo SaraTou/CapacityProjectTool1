@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table Pagination</title>
+
+    <link href="bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body ng-app="MonApp" ng-controller="Controleur1">
+<div class="datagrid">
+    <div class="container" style="margin-top:35px">
+        <h4>Select Number of Rows</h4>
+        <div class="form-group">
+            <select name="state" id="maxRows" class="form-control" style="width:150px;">
+                <option value="5000">Show All</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <table id="mytable" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>NE id</th>
+                <th> IPP Tag</th>
+                <th>NE Code Otp</th>
+                <th>NE Work Order</th>
+                <th>NE title</th>
+                <th>NE d begin </th>
+                <th>NE d end</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="nessie in nessies">
+                <td>{{nessie.ne_id}}</td>
+                <td>{{nessie.ipp_tag}}</td>
+                <td>{{nessie.ne_code_otp}}</td>
+                <td>{{nessie.ne_work_order}}</td>
+                <td>{{nessie.ne_title}}</td>
+                <td>{{nessie.ne_d_begin}}</td>
+                <td>{{nessie.ne_d_end}}</td>
+                <td>
+                    <button ng-click="editerNessie(nessie)">Update</button>
+                    <button ng-click="supprimerNessie(nessie)">Deactivated</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+<!-- MODIFIER UN Nessie        -->
+<div class="datagrid">
+    <table>
+        <thead><tr><th>Edit</th><tr></thead>
+        <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right"><button ng-click="validerEditionNessie()">Edit</button></button></div></tr></tfoot>
+        <tbody>
+        <tr><td><label>NE id</label><br><input ng-model="nessie.ne_id" disabled></input><br>
+            <label>IPP Tag</label><br><input ng-model="nessie.ipp_tag"></input><br>
+            <label>NE Code Otp</label><br><input ng-model="nessie.ne_code_otp"></input><br>
+            <label>NE Work Order</label><br><input ng-model="nessie.ne_work_order"></input><br>
+            <label>NE title</label><br><input ng-model="nessie.ne_title"></input><br>
+            <label>NE d begin</label><br><input ng-model="nessie.ne_d_begin"></input><br>
+            <label>NE d end</label><br><input ng-model="nessie.ne_d_end"></input><br>
+        </td></tr>
+        </tbody>
+    </table>
+</div><br><br>
+</div>
+<!-- CREER UN Nessie       -->
+<div class="datagrid">
+    <table>
+        <thead><tr><th>Create</th><tr></thead>
+        <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right" ng-click="ajouterNessie()"><button>Create</button></button></div></tr></tfoot>
+        <tbody>
+        <tr><td>
+            <label>IPP Tag</label><br><input ng-model="nouvelNessie.ipp_tag"></input><br>
+            <label>NE Code Otp</label><br><input ng-model="NouvelNessie.ne_code_otp"></input><br>
+            <label>NE Work Order</label><br><input ng-model="NouvelNessie.ne_work_order"></input><br>
+            <label>NE title</label><br><input ng-model="NouvelNessie.ne_title"></input><br>
+            <label>NE d begin</label><br><input  type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="NouvelNessie.ne_d_begin"></input><br>
+            <label>NE d end</label><br><input type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="NouvelNessie.ne_d_end"></input><br>
+        </td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script>
+    var table = '#mytable'
+    $('#maxRows').on('change', function(){
+        $('.pagination').html('')
+        var trnum = 0
+        var maxRows = parseInt($(this).val())
+        var totalRows = $(table+' tbody tr').length
+        $(table+' tr:gt(0)').each(function(){
+            trnum++
+            if(trnum > maxRows){
+                $(this).hide()
+            }
+            if(trnum <= maxRows){
+                $(this).show()
+            }
+        })
+        if(totalRows > maxRows){
+            var pagenum = Math.ceil(totalRows/maxRows)
+            for(var i=1;i<=pagenum;){
+                $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
+            }
+        }
+        $('.pagination li:first-child').addClass('active')
+        $('.pagination li').on('click',function(){
+            var pageNum = $(this).attr('data-page')
+            var trIndex = 0;
+            $('.pagination li').removeClass('active')
+            $(this).addClass('active')
+            $(table+' tr:gt(0)').each(function(){
+                trIndex++
+                if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+                    $(this).hide()
+                } else{
+                    $(this).show()
+                }
+            })
+        })
+    })
+
+</script>
+</body>
+</html>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+    .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #318da6; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }  .datagrid table td, .datagrid table th { padding: 3px 10px; }  .datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #318da6), color-stop(1, #318da6) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #BF691E; }  .datagrid table thead th:first-child { border: none; }  .datagrid table tbody td { color: #318da6; border-left: 1px solid #D9CFB8;font-size: 12px;font-weight: normal; }  .datagrid table tbody .alt td { background: #F0E5CC; color: #7F4614; }  .datagrid table tbody td:first-child { border-left: none; }    .datagrid table tfoot td div { border-top: 1px solid #A65B1A;background: #F0E5CC;}  .datagrid table tfoot td { padding: 0; font-size: 12px }  .datagrid table tfoot td div{ padding: 2px; }  .datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }  .datagrid table tfoot  li { display: inline; }  .datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #A65B1A;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #A65B1A), color-stop(1, #7F4614) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; }  .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #7F4614; color: #FFFFFF; background: none; background-color:#A65B1A;}  div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+</style>
