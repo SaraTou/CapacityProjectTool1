@@ -8,66 +8,22 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 <head>
     <title>Domain Appli List</title>
     <link href="bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
-            // Append table with add row form on add new button click
-            $(".add-new").click(function(){
-                $(this).attr("disabled", "disabled");
-                var index = $("table tbody tr:last-child").index();
-                var row = '<tr>' +
-                    '<td><input type="text" class="form-control" name="d id" id="d_id"></td>' +
-                    '<td><input type="text" class="form-control" name="d dept" id="d_dept"></td>' +
-                    '<td><input type="text" class="form-control" name="d_domain" id="d_domain"></td>' +
-                    '<td><input type="text" class="form-control" name="d_description" id="d_description"></td>' +
-                    '<td><input type="text" class="form-control" name="d_unit" id="d_unit"></td>'
-                    '<td>' + actions + '</td>' +
-                    '</tr>';
-                $("table").append(row);
-                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            // Add row on add button click
-            $(document).on("click", ".add", function(){
-                var empty = false;
-                var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function(){
-                    if(!$(this).val()){
-                        $(this).addClass("error");
-                        empty = true;
-                    } else{
-                        $(this).removeClass("error");
-                    }
-                });
-                $(this).parents("tr").find(".error").first().focus();
-                if(!empty){
-                    input.each(function(){
-                        $(this).parent("td").html($(this).val());
-                    });
-                    $(this).parents("tr").find(".add, .edit").toggle();
-                    $(".add-new").removeAttr("disabled");
-                }
-            });
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function(){
-                $(this).parents("tr").find("td:not(:last-child)").each(function(){
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
-            });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function(){
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
-            });
-        });
-    </script>
+
 
 </head>
 <body ng-app="MonApp" ng-controller="Controleur1">
@@ -86,113 +42,123 @@
                 <option value="100">100</option>
             </select>
         </div>
-        <table id="mytable" class="table table-bordered table-striped">
-            <thead>
-            <tr>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2> <b>Domain Activities </b></h2>
+            </div>
+            <div>
+                <input type="text" id="search" placeholder="  live search"></input>
+            </div>
+            <div class="col-sm-6">
+                <a href="#addDomainModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Domain</span></a>
+            </div>
+            <table id="myInput" class="table table-bordered table-striped">
+                <thead>
+                <tr>
                     <th>D ID</th>
                     <th>D Dept</th>
                     <th>D Domain</th>
                     <th>D description</th>
                     <th>D Unit</th>
                     <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="domain in domains">
-                <td>{{domain.d_id}}</td>
-                <td>{{domain.d_dept}}</td>
-                <td>{{domain.d_domain}}</td>
-                <td>{{domain.d_description}}</td>
-                <td>{{domain.d_unit}}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="...">
-                    <div></div><button type="button" class="btn btn-danger" ng-click="supprimerDomain(domain)"><i class="glyphicon glyphicon-trash">
-                    </i></button></div>
-                   <div><button type="button" class="btn btn-default" ng-click="editerDomain(domain)"><i class="glyphicon glyphicon-pencil">
-                    </i></button></div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- MODIFIER UN Domain        -->
-    <div class="datagrid">
-        <table>
-            <thead><tr><th>Edit</th><tr></thead>
-            <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right"><button ng-click="validerEditionDomain()">Modifier</button></button></div></tr></tfoot>
-            <tbody>
-            <tr><td><label>d id </label><br><input ng-model="domain.d_id" disabled></input><br>
-                <label>d Dept</label><br><input ng-model="domain.d_dept"></input><br>
-                <label>d Domain</label><br><input ng-model="domain.d_domain"></input><br>
-                <label>d Description</label><br><input ng-model="domain.d_description"></input><br>
-                <label>d Unit</label><br><input ng-model="domain.d_unit"></input><br>
-            </td></tr>
-            </tbody>
-        </table>
-    </div><br><br>
-    <!--CREER UN Domain                -->
-    <div class="datagrid">
-        <table>
-            <thead><tr><th>Create</th></tr></thead>
-            <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right" ng-click="ajouterDomain()"><button>Create</button></button></div></tr></tfoot>
-            <tbody>
-            <tr><td>
-                <label>D dept</label><br><input ng-model="nouvelDomain.d_dept"></input><br>
-                <label>D Domain</label><br><input ng-model="nouvelDomain.d_domain"></input><br>
-                <label>D Description</label><br><input ng-model="nouvelDomain.d_description"></input><br>
-                <label>D Unit</label><br><input ng-model="nouvelDomain.d_unit"></input><br>
-            </td></tr>
-            </tbody>
-        </table>
-    </div>
+                </tr>
+                </thead>
+                <tbody id="myTable">
+                <tr ng-repeat="domain in domains">
+                    <td>{{domain.d_id}}</td>
+                    <td>{{domain.d_dept}}</td>
+                    <td>{{domain.d_domain}}</td>
+                    <td>{{domain.d_description}}</td>
+                    <td>{{domain.d_unit}}</td>
+                    <td>
+                        <button ng-click="editerDomain(domain)">Edit</button>
+                        <button ng-click="supprimerDomain(domain)">Deactivated</button>
+                    </td>
+                </tr>
 
-    <div class="pagination-container">
-        <nav>
-            <ul class="pagination"></ul>
-        </nav>
-</div>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-container">
+            <nav>
+                <ul class="pagination">
 
+                </ul>
+            </nav>
+        </div>
+        <script>
+            var table = '#mytable'
+            var currentpage =1;
+            $('#maxRows').on('change', function(){
+                $('.pagination').html('')
+                var trnum = 0
+                var maxRows = parseInt($(this).val())
+                var totalRows = $(table+' tbody tr').length
+                $(table+' tr:gt(0)').each(function(){
+                    trnum++
+                    if(trnum > maxRows){
+                        $(this).hide()
+                    }
+                    if(trnum <= maxRows){
+                        $(this).show()
+                    }
+                })
+                if(totalRows > maxRows){
+                    var pagenum = Math.ceil(totalRows/maxRows)
 
-    <script>
-                var table = '#mytable'
-                $('#maxRows').on('change', function(){
-                    $('.pagination').html('')
-                    var trnum = 0
-                    var maxRows = parseInt($(this).val())
-                    var totalRows = $(table+' tbody tr').length
+                    $('.pagination').append('<li data-page="'+ currentpage-- +'">\<span>'+ 'previous' +'<span class="sr-only">(current)</span></span>\</li>').show()
+                    for(var i=1;i<=pagenum;){
+                        $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
+                        currentpage=i;
+                    }
+                    $('.pagination').append('<li data-page="'+ currentpage++ +'">\<span>'+ 'inext' +'<span class="sr-only">(current)</span></span>\</li>').show()
+                    for(var i=1;i>pagenum;){
+                        $('.pagination').append('<li data-page="'+i+'">\<span>'+ i-- +'<span class="sr-only">(current)</span></span>\</li>').show()
+                        currentpage=i;
+                    }
+
+                }
+                $('.pagination li:first-child').addClass('active')
+                $('.pagination li').on('click',function(){
+                    var pageNum = $(this).attr('data-page')
+                    var trIndex = 0;
+                    currentpage=$(this).attr('data-page');
+                    $('.pagination li').removeClass('active')
+                    $(this).addClass('active')
                     $(table+' tr:gt(0)').each(function(){
-                        trnum++
-                        if(trnum > maxRows){
+                        trIndex++
+                        if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
                             $(this).hide()
-                        }
-                        if(trnum <= maxRows){
+                        } else{
                             $(this).show()
                         }
                     })
-                    if(totalRows > maxRows){
-                        var pagenum = Math.ceil(totalRows/maxRows)
-                        for(var i=1;i<=pagenum;){
-                            $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
-                        }
-                    }
-                    $('.pagination li:first-child').addClass('active')
-                    $('.pagination li').on('click',function(){
-                        var pageNum = $(this).attr('data-page')
-                        var trIndex = 0;
-                        $('.pagination li').removeClass('active')
-                        $(this).addClass('active')
-                        $(table+' tr:gt(0)').each(function(){
-                            trIndex++
-                            if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
-                                $(this).hide()
-                            } else{
-                                $(this).show()
-                            }
-                        })
-                    })
                 })
+            })
 
-            </script>
+        </script>
+            <script>
+                $("#search").on("keyup", function() {
+                    var value = $(this).val();
+
+                    $("table tr").each(function(index) {
+                        if (index !== 0) {
+
+                            $row = $(this);
+
+                            var id = $row.find("td:first").text();
+
+                            if (id.indexOf(value) !== 0) {
+                                $row.hide();
+                            }
+                            else {
+                                $row.show();
+                            }
+                        }
+                    });
+                });
+        </script>
+    </div>
 </div>
 </body>
 </html>

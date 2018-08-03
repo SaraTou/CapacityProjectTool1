@@ -4,135 +4,501 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Table Pagination</title>
+    <title>Project  Manager Application </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+        .table-wrapper {
+            background: #fff;
+            padding: 20px 25px;
+            margin: 30px 0;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 15px;
+            background:#47a3da;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+        .table-title .btn-group {
+            float: right;
+        }
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        table.table tr th:first-child {
+            width: 60px;
+        }
+        table.table tr th:last-child {
+            width: 100px;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+        table.table td a:hover {
+            color: #2196F3;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #F44336;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+        .pagination li a:hover {
+            color: #666;
+        }
+        .pagination li.active a, .pagination li.active a.page-link {
+            background: #03A9F4;
+        }
+        .pagination li.active a:hover {
+            background: #0397d6;
+        }
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+        .custom-checkbox input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            margin: 5px 0 0 3px;
+            z-index: 9;
+        }
+        .custom-checkbox label:before{
+            width: 18px;
+            height: 18px;
+        }
+        .custom-checkbox label:before {
+            content: '';
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            background: white;
+            border: 1px solid #bbb;
+            border-radius: 2px;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid #000;
+            border-width: 0 3px 3px 0;
+            transform: inherit;
+            z-index: 3;
+            transform: rotateZ(45deg);
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:before {
+            border-color: #03A9F4;
+            background: #03A9F4;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:after {
+            border-color: #fff;
+        }
+        .custom-checkbox input[type="checkbox"]:disabled + label:before {
+            color: #b8b8b8;
+            cursor: auto;
+            box-shadow: none;
+            background: #ddd;
+        }
+        /* Modal styles */
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 30px;
+        }
+        .modal .modal-content {
+            border-radius: 3px;
+        }
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+        .modal .modal-title {
+            display: inline-block;
+        }
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+        .modal .btn {
+            border-radius: 2px;
+            min-width: 100px;
+        }
+        .modal form label {
+            font-weight: normal;
+        }
+        body {
+            background-color: #fafafa;
+        }
 
-    <link href="bootstrap.min.css" rel="stylesheet"/>
+        table {
+            color: #333;
+            font-size: .9em;
+            font-weight: 300;
+            line-height: 40px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 2px solid #ed1c40;
+            width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,.16);
+            border-radius: 2px;
+        }
+
+        th {
+            background: #ed1c40;
+            color: #fff;
+            border: none;
+        }
+
+        tr:hover:not(th) {background-color: rgba(237,28,64,.1);}
+
+
+        input[type="button"] {
+            transition: all .3s;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        input[type="button"]:not(.active) {
+            background-color:transparent;
+        }
+
+        .active {
+            background-color: #ff4d4d;
+            color :#fff;
+        }
+
+        input[type="button"]:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function(){
+                if(this.checked){
+                    checkbox.each(function(){
+                        this.checked = true;
+                    });
+                } else{
+                    checkbox.each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function(){
+                if(!this.checked){
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+    <script src="lib/angular/angular.js"></script>
+    <script>
+        var $table = document.getElementById("myTable"),
+// number of rows per page
+            $n = 5,
+// number of rows of the table
+            $rowCount = $table.rows.length,
+// get the first cell's tag name (in the first row)
+            $firstRow = $table.rows[0].firstElementChild.tagName,
+// boolean var to check if table has a head row
+            $hasHead = ($firstRow === "TH"),
+// an array to hold each row
+            $tr = [],
+// loop counters, to start count from rows[1] (2nd row) if the first row has a head tag
+            $i,$ii,$j = ($hasHead)?1:0,
+// holds the first row if it has a (<TH>) & nothing if (<TD>)
+            $th = ($hasHead?$table.rows[(0)].outerHTML:"");
+        // count the number of pages
+        var $pageCount = Math.ceil($rowCount / $n);
+        // if we had one page only, then we have nothing to do ..
+        if ($pageCount > 1) {
+            // assign each row outHTML (tag name & innerHTML) to the array
+            for ($i = $j,$ii = 0; $i < $rowCount; $i++, $ii++)
+                $tr[$ii] = $table.rows[$i].outerHTML;
+            // create a div block to hold the buttons
+            $table.insertAdjacentHTML("afterend","<div id='buttons'></div");
+            // the first sort, default page is the first one
+            sort(1);
+        }
+
+        // ($p) is the selected page number. it will be generated when a user clicks a button
+        function sort($p) {
+            /* create ($rows) a variable to hold the group of rows
+            ** to be displayed on the selected page,
+            ** ($s) the start point .. the first row in each page, Do The Math
+            */
+            var $rows = $th,$s = (($n * $p)-$n);
+            for ($i = $s; $i < ($s+$n) && $i < $tr.length; $i++)
+                $rows += $tr[$i];
+
+            // now the table has a processed group of rows ..
+            $table.innerHTML = $rows;
+            // create the pagination buttons
+            document.getElementById("buttons").innerHTML = pageButtons($pageCount,$p);
+            // CSS Stuff
+            document.getElementById("id"+$p).setAttribute("class","active");
+        }
+
+
+        // ($pCount) : number of pages,($cur) : current page, the selected one ..
+        function pageButtons($pCount,$cur) {
+            /* this variables will disable the "Prev" button on 1st page
+               and "next" button on the last one */
+            var $prevDis = ($cur == 1)?"disabled":"",
+                $nextDis = ($cur == $pCount)?"disabled":"",
+                /* this ($buttons) will hold every single button needed
+                ** it will creates each button and sets the onclick attribute
+                ** to the "sort" function with a special ($p) number..
+                */
+                $buttons = "<input type='button' value='&lt;&lt; Prev' onclick='sort("+($cur - 1)+")' "+$prevDis+">";
+            for ($i=1; $i<=$pCount;$i++)
+                $buttons += "<input type='button' id='id"+$i+"'value='"+$i+"' onclick='sort("+$i+")'>";
+            $buttons += "<input type='button' value='Next &gt;&gt;' onclick='sort("+($cur + 1)+")' "+$nextDis+">";
+            return $buttons;
+        }
+    </script>
 </head>
 <body ng-app="MonApp" ng-controller="Controleur1">
-<div class="datagrid">
-<div class="container" style="margin-top:35px">
-    <h4>Select Number of Rows</h4>
-    <div class="form-group">
-        <select name="state" id="maxRows" class="form-control" style="width:150px;">
-            <option value="5000">Show All</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="75">75</option>
-            <option value="100">100</option>
-        </select>
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2> <b>Domain Appli </b></h2>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#addDomainModal" class="btn btn-success" ng-click="ajouterDomain()" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Domain</span></a>
+                    <a href="#deleteDomainModal" class="btn btn-danger" ng-click="supprimerDomain()" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+                </div>
+            </div>
+        </div>
+        <table id="myTable" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>D ID</th>
+                <th>D Dept</th>
+                <th>D Domain</th>
+                <th>D description</th>
+                <th>D Unit</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="domain in domains">
+                <td>{{domain.d_id}}</td>
+                <td>{{domain.d_dept}}</td>
+                <td>{{domain.d_domain}}</td>
+                <td>{{domain.d_description}}</td>
+                <td>{{domain.d_unit}}</td>
+                <td>
+                    <a href="#editDomainModal" class="edit" ng-click="editerDomain(domain)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="#deleteDomainModal" class="delete" ng-click="supprimerDomain(domain)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="clearfix">
+            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination">
+                <li class="page-item disabled"><a href="#">Previous</a></li>
+                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+        </div>
     </div>
-    <table id="mytable" class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>Pm id</th>
-            <th>Pm code</th>
-            <th>Pm first name</th>
-            <th>Pm lastname</th>
-            <th>Pm team</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="manager in managers">
-            <td>{{manager.pm_id}}</td>
-            <td>{{manager.pm_code}}</td>
-            <td>{{manager.pm_firstname}}</td>
-            <td>{{manager.pm_lastname}}</td>
-            <td>{{manager.pm_team}}</td>
-            <td>
-                <button ng-click="editer(manager)">Update</button>
-                <button ng-click="supprimer(manager)">Deactivated</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
-    <div class="pagination-container">
-        <nav>
-            <ul class="pagination"></ul>
-        </nav>
+<!-- Edit Modal HTML -->
+<div id="addDomainModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Domain </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <tr><td>
+                            <label>D dept</label><br><input ng-model="nouvelDomain.d_dept"></input><br>
+                            <label>D Domain</label><br><input ng-model="nouvelDomain.d_domain"></input><br>
+                            <label>D Description</label><br><input ng-model="nouvelDomain.d_description"></input><br>
+                            <label>D Unit</label><br><input ng-model="nouvelDomain.d_unit"></input><br>
+                        </td></tr>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-success" ng-click="ajouterDomain()" value="Add">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-<!-- MODIFIER UN MANAGER        -->
-<div class="datagrid">
-    <table>
-        <thead><tr><th>Update</th><tr></thead>
-         <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right"><button ng-click="validerEdition()">editer</button></button></div></tr></tfoot>
-        <tbody>
-        <tr><td><label>PM id</label><br><input ng-model="manager.pm_id" disabled></input><br>
-            <label>PM code</label><br><input ng-model="manager.pm_code"></input><br>
-            <label>PM first name</label><br><input ng-model="manager.pm_firstname"></input><br>
-            <label>PM last name</label><br><input ng-model="manager.pm_lastname"></input><br>
-            <label>PM team</label><br><input ng-model="manager.pm_team"></input><br></td></tr>
-        </tbody>
-    </table>
-</div><br><br>
+<!-- Edit Modal HTML -->
+<div id="editDomainModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Domain</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <tr><td><label>d id </label><br><input ng-model="domain.d_id" disabled></input><br>
+                            <label>d Dept</label><br><input ng-model="domain.d_dept"></input><br>
+                            <label>d Domain</label><br><input ng-model="domain.d_domain"></input><br>
+                            <label>d Description</label><br><input ng-model="domain.d_description"></input><br>
+                            <label>d Unit</label><br><input ng-model="domain.d_unit"></input><br>
+                        </td></tr>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-info"  ng-click="validerEditionDomain()" value="Save">
+                    </div>
+            </form>
+        </div>
+    </div>
 </div>
-<!-- CREER UN MANAGER       -->
-<div class="datagrid">
-    <table>
-        <thead><tr><th>Create</th><tr></thead>
-        <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right" ng-click="ajouter()"><button>ajouter</button></button></div></tr></tfoot>
-        <tbody>
-        <tr><td>
-            <label>PM first name</label><br><input ng-model="nouvelManager.pm_firstname"></input><br>
-            <label>PM last name</label><br><input ng-model="nouvelManager.pm_lastname"></input><br>
-            <label>PM team</label><br><input ng-model="nouvelManager.pm_team"></input><br></td></tr>
-        </tbody>
-    </table>
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Nessie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
-<script src="jquery.min.js"></script>
-<script src="bootstrap.min.js"></script>
-<script>
-    var table = '#mytable'
-    $('#maxRows').on('change', function(){
-        $('.pagination').html('')
-        var trnum = 0
-        var maxRows = parseInt($(this).val())
-        var totalRows = $(table+' tbody tr').length
-        $(table+' tr:gt(0)').each(function(){
-            trnum++
-            if(trnum > maxRows){
-                $(this).hide()
-            }
-            if(trnum <= maxRows){
-                $(this).show()
-            }
-        })
-        if(totalRows > maxRows){
-            var pagenum = Math.ceil(totalRows/maxRows)
-            for(var i=1;i<=pagenum;){
-                $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
-            }
-        }
-        $('.pagination li:first-child').addClass('active')
-        $('.pagination li').on('click',function(){
-            var pageNum = $(this).attr('data-page')
-            var trIndex = 0;
-            $('.pagination li').removeClass('active')
-            $(this).addClass('active')
-            $(table+' tr:gt(0)').each(function(){
-                trIndex++
-                if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
-                    $(this).hide()
-                } else{
-                    $(this).show()
-                }
-            })
-        })
-    })
-
-</script>
 </body>
 </html>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<style>
-    .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #318da6; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }  .datagrid table td, .datagrid table th { padding: 3px 10px; }  .datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #318da6), color-stop(1, #318da6) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #BF691E; }  .datagrid table thead th:first-child { border: none; }  .datagrid table tbody td { color: #318da6; border-left: 1px solid #D9CFB8;font-size: 12px;font-weight: normal; }  .datagrid table tbody .alt td { background: #F0E5CC; color: #7F4614; }  .datagrid table tbody td:first-child { border-left: none; }    .datagrid table tfoot td div { border-top: 1px solid #A65B1A;background: #F0E5CC;}  .datagrid table tfoot td { padding: 0; font-size: 12px }  .datagrid table tfoot td div{ padding: 2px; }  .datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }  .datagrid table tfoot  li { display: inline; }  .datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #A65B1A;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #A65B1A), color-stop(1, #7F4614) );background:-moz-linear-gradient( center top, #A65B1A 5%, #7F4614 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#A65B1A', endColorstr='#7F4614');background-color:#A65B1A; }  .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #7F4614; color: #FFFFFF; background: none; background-color:#A65B1A;}  div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
-</style>

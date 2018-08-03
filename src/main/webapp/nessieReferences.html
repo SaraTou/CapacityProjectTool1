@@ -24,16 +24,22 @@
                 <option value="100">100</option>
             </select>
         </div>
+        <div class="col-sm-6">
+            <h2> <b>Nessies </b></h2>
+        </div>
+        <div class="col-sm-6">
+            <a href="#addNessieModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Nessie</span></a>
+        </div>
         <table id="mytable" class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>NE id</th>
+                <th> id</th>
                 <th> IPP Tag</th>
-                <th>NE Code Otp</th>
-                <th>NE Work Order</th>
-                <th>NE title</th>
-                <th>NE d begin </th>
-                <th>NE d end</th>
+                <th>NESSIE Code Otp</th>
+                <th>Work Order number</th>
+                <th>OTP title</th>
+                <th>Begining </th>
+                <th>End</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -47,8 +53,8 @@
                 <td>{{nessie.ne_d_begin}}</td>
                 <td>{{nessie.ne_d_end}}</td>
                 <td>
-                    <button ng-click="editerNessie(nessie)">Update</button>
-                    <button ng-click="supprimerNessie(nessie)">Deactivated</button>
+                    <button ng-click="editerNessie(nessie)"></i>Edit</button>
+                    <button ng-click="supprimerNessie(nessie)"></i>Deactivated</button>
                 </td>
             </tr>
             </tbody>
@@ -66,13 +72,13 @@
         <thead><tr><th>Edit</th><tr></thead>
         <tfoot><tr><td colspan="4"><div id="paging" style="text-align:right"><button ng-click="validerEditionNessie()">Edit</button></button></div></tr></tfoot>
         <tbody>
-        <tr><td><label>NE id</label><br><input ng-model="nessie.ne_id" disabled></input><br>
+        <tr><td><label> Id</label><br><input ng-model="nessie.ne_id" disabled></input><br>
             <label>IPP Tag</label><br><input ng-model="nessie.ipp_tag"></input><br>
-            <label>NE Code Otp</label><br><input ng-model="nessie.ne_code_otp"></input><br>
-            <label>NE Work Order</label><br><input ng-model="nessie.ne_work_order"></input><br>
-            <label>NE title</label><br><input ng-model="nessie.ne_title"></input><br>
-            <label>NE d begin</label><br><input ng-model="nessie.ne_d_begin"></input><br>
-            <label>NE d end</label><br><input ng-model="nessie.ne_d_end"></input><br>
+            <label>NESSIE Code Otp</label><br><input ng-model="nessie.ne_code_otp"></input><br>
+            <label> Work Order number</label><br><input ng-model="nessie.ne_work_order"></input><br>
+            <label>OTP title</label><br><input ng-model="nessie.ne_title"></input><br>
+            <label>Begining</label><br><input ng-model="nessie.ne_d_begin"></input><br>
+            <label>End</label><br><input ng-model="nessie.ne_d_end"></input><br>
         </td></tr>
         </tbody>
     </table>
@@ -86,16 +92,15 @@
         <tbody>
         <tr><td>
             <label>IPP Tag</label><br><input ng-model="nouvelNessie.ipp_tag"></input><br>
-            <label>NE Code Otp</label><br><input ng-model="NouvelNessie.ne_code_otp"></input><br>
-            <label>NE Work Order</label><br><input ng-model="NouvelNessie.ne_work_order"></input><br>
-            <label>NE title</label><br><input ng-model="NouvelNessie.ne_title"></input><br>
-            <label>NE d begin</label><br><input  type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="NouvelNessie.ne_d_begin"></input><br>
-            <label>NE d end</label><br><input type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="NouvelNessie.ne_d_end"></input><br>
+            <label>NE Code Otp</label><br><input ng-model="nouvelNessie.ne_code_otp"></input><br>
+            <label>NE Work Order</label><br><input ng-model="nouvelNessie.ne_work_order"></input><br>
+            <label>NE title</label><br><input ng-model="nouvelNessie.ne_title"></input><br>
+            <label>NE d begin</label><br><input  type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="nouvelNessie.ne_d_begin"></input><br>
+            <label>NE d end</label><br><input type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" ng-model="nouvelNessie.ne_d_end"></input><br>
         </td></tr>
         </tbody>
     </table>
 </div>
-
 <script src="jquery.min.js"></script>
 <script src="bootstrap.min.js"></script>
 <script>

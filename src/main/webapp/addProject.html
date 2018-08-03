@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <input>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>Project Manager Application </title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto%7CVarela+Round">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <form action="ProjectList.html">
+        <button class="btn"><i
+                class="fa fa-arrow-circle-left"></i></button></form>
+    <style>
+        body {
+            background:white;
+        }
+        .table-title {
+            background: #47a3da;
+        }
+        .btn {
+            background-color: darkslategrey;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: RoyalBlue;
+        }
+        b {
+            font-weight: 700;
+            color: white;
+        }
+    </style>
+</head>
+<body ng-app="MonApp" ng-controller="Controleur1">
+<div class="container">
+    <div id="addProjectModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form name="" class="form-horizontal" role="form">
+                    <div class="col-md-6 form-line">
+                        <div class="modal-header">
+                            <div class="table-title">
+                                <fieldset><b>Description Project List</b>
+                                </fieldset>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="form-horizontal" role="form"><!-- <a href="#addEmployeeModal" class="btn btn-success" ng-click="ajouterProject()" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Project</span></a>!-->
+                                        <div class="pos">
+                                            <fieldset><legend></legend><label>Classification
+                                                &nbsp;</label>
+                                                <select ng-model="nouvelProject.prj_type">
+                                                    <option value="Large">Build</option>
+                                                    <option value="Medium">Run</option>
+                                                </select>
+                                                &nbsp;Project
+                                                Team&nbsp; &nbsp;
+                                                <select ng-model="nouvelProject.team">
+                                                    <option value="DGT">AWL-FS-EQU-COO-OPE-OC-PM-PT3</option>
+                                                    <option value="SBA">AWL-FS-EQU-COO-OPE-OC-PM-PM</option>
+                                                    <option value="2">AWL-FS-EQU-COO-OPE-OC-PM</option>
+                                                    <option value="3">AWL-EQWL-COO-OPE-OSO-IA-CS</option>
+                                                    <option value="9">AWL-EQWL-COO-OPE-OSO-IA-CS</option>
+                                                    <option value="9">AWL-EQWL-COO-OPE-TE-S2-OT4</option>
+                                                </select>
+                                                &nbsp;&nbsp;Firstname &nbsp;<input
+                                                        ng-model="nouvelProject.pm_firstname"> &nbsp; &nbsp;
+                                                <label>Lastname
+                                                    &nbsp;</label><input ng-model="nouvelProject.pm_lastname"><br>
+                                                <br>
+                                                &nbsp;<label>Internal
+                                                    Code To </label>&nbsp; &nbsp;
+                                                <select ng-model="nouvelProject.pm_code">
+                                                    <option value="DGT">DGT</option>
+                                                    <option value="SBA">SBA</option>
+                                                    <option value="2">CED</option>
+                                                    <option value="3">PT1</option>
+                                                    <option value="9">MRP</option>
+                                                    <option value="9">EHT</option>
+                                                </select>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;&nbsp;
+                                                Domain &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                                <input ng-model="nouvelProject.d_domain">&nbsp;&nbsp;Executive/Sponsor
+                                                name&nbsp;<input ng-model="nouvelProject.sponsor_name">
+                                                &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp;&nbsp;<br>
+                                                <br>
+                                                Type &nbsp;
+                                                <select ng-model="nouvelProject.type">
+                                                    <option value="Large">Large</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Small">Small</option>
+                                                </select>
+                                                &nbsp;Priority&nbsp;
+                                                <select ng-model="nouvelProject.prio">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="9">9</option>
+                                                </select>
+                                                &nbsp; Country
+                                                <select ng-model="nouvelProject.country">
+                                                    <option value="FRA">FRA</option>
+                                                    <option value="BEL">BEL</option>
+                                                    <option value="DEU">DEU</option>
+                                                    <option value="ITA">ITA</option>
+                                                    <option value="NLD">NLD</option>
+                                                    <option value="ESP">ESP</option>
+                                                </select>
+                                                &nbsp; &nbsp; &nbsp; IPP Tag &nbsp;
+                                                <select ng-model="nouvelProject.ipp_tag" name="FRA">
+                                                    <option value="Engagement">?</option>
+                                                    <option value="To Start">EW17-18A</option>
+                                                    <option value="Ongoing">EW17-18B</option>
+                                                    <option value="Pending">EW17-18D</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                Internal Code To <input ng-model="nouvelProject.codeto">
+                                                &nbsp; OTP Code(NESSIE) &nbsp;
+                                                &nbsp;<input ng-model="nouvelProject.ne_code_otp"><br>
+                                                <br>
+                                                OTP Title &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                        ng-model="nouvelProject.ne_code_otp">
+                                                &nbsp;Subtitle(Project,Stage,Other) &nbsp; &nbsp; <input
+                                                        ng-model="nouvelProject.stage"><br>
+                                            </fieldset>
+                                            <br>
+                                            <fieldset>
+                                                <legend>Project Constraints and milestones</legend>
+                                                Begin&nbsp; &nbsp;<input ng-model="nouvelProject.begin">
+                                                &nbsp; &nbsp; &nbsp; &nbsp;Initial Go live &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="nouvelProject.golive"> &nbsp; &nbsp;
+                                                &nbsp;<span style="font-weight: bold;">Project
+Follow-up</span> &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;Status &nbsp;
+                                                <select ng-model="nouvelProject.status">
+                                                    <option value="Engagement">Engagement</option>
+                                                    <option value="To Start">To Start</option>
+                                                    <option value="Ongoing">Ongoing</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Standby">Standby</option>
+                                                    <option value="BuildToRun">BuildToRun</option>
+                                                    <option value="To close">To close</option>
+                                                    <option value="Closed">Closed</option>
+                                                    <option value="Cancelled">Cancelled</option>
+                                                </select>
+                                                &nbsp; &nbsp; Work Priority &nbsp; &nbsp;
+                                                <select ng-model="nouvelProject.prio_week">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp;&nbsp; R/A/G
+                                                &nbsp;Status &nbsp;
+                                                <select name="FRA">
+                                                </select>
+                                                Risk Level&nbsp;
+                                                <select ng-model="nouvelProject.risk_level">
+                                                    <option value="Null">0-Null</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="high">high</option>
+                                                    <option value="Critical">Critical</option>
+                                                </select>
+                                                <br>
+                                                &nbsp;Initial forecast <input
+                                                    ng-model="nouvelProject.init_forecast"> &nbsp;
+                                                &nbsp; Build
+                                                Rate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;&nbsp; <input
+                                                    ng-model="nouvelProject.build_rate"> <br>
+                                                <br>
+                                                End &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; <input ng-model="nouvelProject.end">
+                                                &nbsp; &nbsp; &nbsp; Reestimated GO Live <input
+                                                    ng-model="nouvelProject.chg_live"><br>
+                                                <br>
+                                            </fieldset>
+                                            <br>
+                                            <fieldset>
+                                                <legend>Initial Technical Delivery milestones</legend>
+                                                <br>
+                                                DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="nouvelProject.dev"> &nbsp; &nbsp;
+                                                RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="nouvelProject.rci"> &nbsp; &nbsp;
+                                                &nbsp;RCE/EUA &nbsp;<input ng-model="nouvelProject.rce"><br>
+                                                <br>
+                                                RCT/TUA <input ng-model="nouvelProject.rct">
+                                                &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                                &nbsp;&nbsp;<input ng-model="nouvelProject.pprod">
+                                                &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="nouvelProject.prod"><br>
+                                                <br>
+                                                DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="nouvelProject.drs"> &nbsp; &nbsp; DRS
+                                                Test &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="nouvelProject.testdrs"><br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <fieldset>
+                                        <legend>Technical Delivery milestones</legend><br>
+                                        DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="nouvelProject.devd"> &nbsp; &nbsp;
+                                        RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                            ng-model="nouvelProject.rcid"> &nbsp; &nbsp;
+                                        &nbsp;RCE/EUA &nbsp;<input ng-model="nouvelProject.rced"><br>
+                                        <br>
+                                        RCT/TUA <input ng-model="nouvelProject.rctd">
+                                        &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                        &nbsp;&nbsp;<input ng-model="nouvelProject.pprodd">
+                                        &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="nouvelProject.prodd"><br>
+                                        <br>
+                                        DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="nouvelProject.drsd"> &nbsp; &nbsp; DRS
+                                        Test &nbsp; &nbsp; &nbsp; <input
+                                            ng-model="nouvelProject.testdrsd"><br>
+                                        <br>
+                                        <br>
+                                        <fieldset>
+                                            <legend>Comments/remarks</legend>
+                                            <textarea ng-model="nouvelProject.comment" rows="4"
+                                                      cols="300"></textarea>
+                                            <div class="class=" col-sm-3="" col-md-6=""><br>
+                                                <br>
+                                                <br>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-default" data-dismiss="modal"
+                                       value="Cancel" type="button"><input
+                                    class="btn btn-success" ng-click="ajouterProject()"
+                                    value="Add" type="submit"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/app.js"></script></div>
+</div>
+</body>
+</html>

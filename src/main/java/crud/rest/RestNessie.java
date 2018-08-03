@@ -55,7 +55,7 @@ public class RestNessie {
     @Produces(MediaType.APPLICATION_JSON)
     public int supprimerNessieParId(@PathParam("ne_id") int ne_id) {
         Dao dao = new Dao();
-        dao.supprimerNessie (ne_id);
+        dao.supprimerNessie(ne_id);
         return 1;
     }
 

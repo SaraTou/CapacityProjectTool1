@@ -1,6 +1,7 @@
 package crud.modele;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
+ import java.time.LocalDate;
+import java.sql.Date;
 
 @XmlRootElement
 // from http://www.vogella.com/articles/REST/

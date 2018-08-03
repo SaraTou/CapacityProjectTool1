@@ -2,6 +2,7 @@ package crud.rest;
 import crud.modele.Domain;
 import crud.dao.Dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 
@@ -71,6 +72,8 @@ public class RestDomain {
         dao.supprimerDomain(d_id);
         return 1;
     }
+
+
 
 
 }
