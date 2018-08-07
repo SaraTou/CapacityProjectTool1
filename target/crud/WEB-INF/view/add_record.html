@@ -1,0 +1,40 @@
+<div class="clearfix">
+  <div class="modal-header model-grey-color">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancelModal()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Add Domain</h4>
+  </div>
+  <div class="modal-body">
+      <form class="form-horizontal" role="form">
+         <div class="form-group">
+            <label class="col-sm-3 control-label">D Dept <sup class="sup-color">*</sup></label>
+
+            <div class="col-sm-8">
+               <input type="text" ng-model="d_dept" placeholder="dept d" class="form-control">
+            </div>
+			<span class="help-button" uib-tooltip="Please enter dept d" tooltip-placement="left">?</span>
+         </div>
+		 <div class="form-group">
+            <label class="col-sm-3 control-label">domain <sup class="sup-color">*</sup></label>
+
+            <div class="col-sm-8">
+               <input type="text" ng-model="d_domain" placeholder="domain" class="form-control">
+            </div>
+			<span class="help-button" uib-tooltip="Please enter  domain" tooltip-placement="left">?</span>
+         </div>
+		 <div class="form-group">
+            <label class="col-sm-3 control-label">description <sup class="sup-color">*</sup></label>
+
+            <div class="col-sm-8">
+               <input type="text" ng-model="d_description" placeholder="domain description" class="form-control">
+            </div>
+			<span class="help-button" uib-tooltip="Please enter domain" tooltip-placement="left">?</span>
+         </div>
+      </form>
+  </div>
+  <div class="modal-footer model-grey-color">
+    <button class="btn btn-success" ng-click="validerEditionDomain()"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+    <button class="btn btn-danger" ng-click="cancelModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+  </div>
+</div>
+
+

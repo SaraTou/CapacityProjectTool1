@@ -1,0 +1,4 @@
+crud\dao\Dao.class
+crud\connexion\Connexion.class
+crud\rest\Rest.class
+crud\modele\Manager.class

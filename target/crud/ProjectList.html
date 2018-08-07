@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project  Manager Application </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="js/jquery-paginate.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            height: 100%;
+        }
+        .table-wrapper {
+            background: #fff;
+            padding: 20px 25px;
+            margin:  0px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            width:1500px;
+
+        }
+        .table-title {
+            padding-bottom: 15px;
+            background: #47a3da;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+
+        }
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+        .table-title .btn-group {
+            float: right;
+        }
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        table.table tr th:first-child {
+            width: 60px;
+        }
+        table.table tr th:last-child {
+            width: 100px;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+        table.table td a:hover {
+            color: #2196F3;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #F44336;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+        .pagination li a:hover {
+            color: #666;
+        }
+        .pagination li.active a, .pagination li.active a.page-link {
+            background: #03A9F4;
+        }
+        .pagination li.active a:hover {
+            background: #0397d6;
+        }
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+        .custom-checkbox input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            margin: 5px 0 0 3px;
+            z-index: 9;
+
+        }
+        .custom-checkbox label:before{
+            width: 18px;
+            height: 18px;
+        }
+        .custom-checkbox label:before {
+            content: '';
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            background: white;
+            border: 1px solid #bbb;
+            border-radius: 2px;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid #000;
+            border-width: 0 3px 3px 0;
+            transform: inherit;
+            z-index: 3;
+            transform: rotateZ(45deg);
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:before {
+            border-color: #03A9F4;
+            background: #03A9F4;
+        }
+        .custom-checkbox input[type="checkbox"]:checked + label:after {
+            border-color: #fff;
+        }
+        .custom-checkbox input[type="checkbox"]:disabled + label:before {
+            color: #b8b8b8;
+            cursor: auto;
+            box-shadow: none;
+            background: #ddd;
+        }
+        /* Modal styles */
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 40px;
+        }
+        .modal .modal-content {
+
+
+            width:auto; height:auto; position: absolute;
+            background-color: #fefefe;
+            padding: 20px 30px;
+            vertical-align: center;
+        }
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+        .modal .modal-title {
+            display: inline-block;
+        }
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+        .modal .btn {
+            border-radius: 2px;
+            min-width: 100px;
+        }
+        .modal form label {
+            font-weight: normal;
+        }
+        .row{
+            overflow: hidden;
+        }
+
+        [class*="col-"]{
+            margin-bottom: -99999px;
+            padding-bottom: 99999px;
+            display: table;
+            display: table-cell;
+            vertical-align: top;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        form, form div {
+            display: inline;
+
+            vertical-align: top;
+        }
+        legend a {
+            color: inherit;
+        }
+        legend.legendStyle {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+        fieldset.fsStyle {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: small;
+            font-weight: normal;
+            border: 1px solid #999999;
+            padding: 1px;
+            /*margin: 1px;*/
+        }
+        legend.legendStyle {
+            font-size: 90%;
+            color: #888888;
+            background-color: transparent;
+            font-weight: bold;
+        }
+
+        legend {
+            width: auto;
+            border-bottom: 0px;
+        }
+
+    </style>
+    <script>
+        $('#myTable1').paginate({
+            limit: 10, // 10 elements per page
+            initialPage: 1, // Start on second page
+            previous: true, // Show previous button
+            previousText: 'Previous page', // Change previous button text
+            next: true, // Show previous button
+            nextText: 'Next page', // Change next button text
+            first: true, // Show first button
+            firstText: 'First', // Change first button text
+            last: true, // Show last button
+            lastText: 'Last', // Change last button text
+            optional: false, // Always show the navigation menu
+            onCreate: function(obj) { console.log('Pagination done!'); } // `onCreate` callback
+            onSelect: function(obj, i) { console.log('Page ' + i + ' selected!'); } // `onSelect` callback
+            childrenSelector: 'tbody > tr.ugly', // Paginate the rows with the `ugly` class
+            navigationWrapper: $('div#myNavWrapper'), // Append the navigation menu to the `#myNavWrapper` div
+            navigationClass: 'my-page-navigation', // New css class added to the navigation menu
+            pageToText: function(i) { return (i + 1).toString(16); } // Page numbers will be shown on hexadecimal notation
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script src="lib/angular/angular.js"></script>
+    <script>
+        $.fn.pageMe = function(opts){
+            var $this = this,
+                defaults = {
+                    perPage: 7,
+                    showPrevNext: false,
+                    hidePageNumbers: false
+                },
+                settings = $.extend(defaults, opts);
+
+            var listElement = $this;
+            var perPage = settings.perPage;
+            var children = listElement.children();
+            var pager = $('.pager');
+
+            if (typeof settings.childSelector!="undefined") {
+                children = listElement.find(settings.childSelector);
+            }
+
+            if (typeof settings.pagerSelector!="undefined") {
+                pager = $(settings.pagerSelector);
+            }
+
+            var numItems = children.size();
+            var numPages = Math.ceil(numItems/perPage);
+
+            pager.data("curr",0);
+
+            if (settings.showPrevNext){
+                $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+            }
+
+            var curr = 0;
+            while(numPages > curr && (settings.hidePageNumbers==false)){
+                $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
+                curr++;
+            }
+
+            if (settings.showPrevNext){
+                $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+            }
+
+            pager.find('.page_link:first').addClass('active');
+            pager.find('.prev_link').hide();
+            if (numPages<=1) {
+                pager.find('.next_link').hide();
+            }
+            pager.children().eq(1).addClass("active");
+
+            children.hide();
+            children.slice(0, perPage).show();
+
+            pager.find('li .page_link').click(function(){
+                var clickedPage = $(this).html().valueOf()-1;
+                goTo(clickedPage,perPage);
+                return false;
+            });
+            pager.find('li .prev_link').click(function(){
+                previous();
+                return false;
+            });
+            pager.find('li .next_link').click(function(){
+                next();
+                return false;
+            });
+
+            function previous(){
+                var goToPage = parseInt(pager.data("curr")) - 1;
+                goTo(goToPage);
+            }
+
+            function next(){
+                goToPage = parseInt(pager.data("curr")) + 1;
+                goTo(goToPage);
+            }
+
+            function goTo(page){
+                var startAt = page * perPage,
+                    endOn = startAt + perPage;
+
+                children.css('display','none').slice(startAt, endOn).show();
+
+                if (page>=1) {
+                    pager.find('.prev_link').show();
+                }
+                else {
+                    pager.find('.prev_link').hide();
+                }
+
+                if (page<(numPages-1)) {
+                    pager.find('.next_link').show();
+                }
+                else {
+                    pager.find('.next_link').hide();
+                }
+
+                pager.data("curr",page);
+                pager.children().removeClass("active");
+                pager.children().eq(page+1).addClass("active");
+
+            }
+        };
+
+        $(document).ready(function(){
+
+            $('#myTable').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});
+
+        });
+    </script>
+
+</head>
+<body ng-app="MonApp" ng-controller="Controleur1">
+<div class="container">
+    <div  class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <input type="search" id="myInput" value="" class="form-control" placeholder="Search..">
+                <br/>
+                <br/>
+                <div class="col-md-6">
+                    <h2> <b>Project List </b></h2>
+                </div>
+                <div class="col-sm-6">
+                        <a href="#addProjectModal"  class="btn btn-success" ng-click="ajouterProject()" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Project</span></a>
+                    <a href="#deleteProjectModal" class="btn btn-danger" ng-click="supprimerProject()" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete Project</span></a>
+                </div>
+            </div>
+        </div>
+
+        <table    class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Owner Code</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Internal Code To</th>
+                <th>OTP code</th>
+                <th>OTP Title</th>
+                <th>Subtitle(project,Stage,other)</th>
+                <th>Domain</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr ng-repeat="project in projects">
+                <td>{{project.pm_code}}</td>
+                <td>{{project.pm_lastname}}</td>
+                <td>{{project.pm_firstname}}</td>
+                <td>{{project.codeto}}</td>
+                <td>{{project.pname}}</td>
+                <td>{{project.ne_title}}</td>
+                <td>{{project.stage}}</td>
+                <td>{{project.d_domain}}</td>
+                <td>{{project.status}}</td>
+
+
+                <td>
+                    <a href="#editProjectModal" class="edit" ng-click="editerProject(project)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="#deleteProjectModal" class="delete" ng-click="supprimerProject(project)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-md-6 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+        </div>
+        </div>
+        <div class="clearfix">
+            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination">
+                <li class="page-item disabled"><a href="#">Previous</a></li>
+                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('legend.togvis').click(function() {
+            var $this = $(this);
+            var parent = $this.parent();
+            var contents = parent.contents().not(this);
+            if (contents.length > 0) {
+                $this.data("contents", contents.remove());
+            } else {
+                $this.data("contents").appendTo(parent);
+            }
+            return false;
+        });
+    });
+</script>
+<!-- add Modal HTML -->
+<div id="addProjectModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div>
+                            <div class="form-group">
+                                        <fieldset>
+                                            <legend class='togvis'>+/-</legend>
+                                            <select ng-model="nouvelProject.prj_type">
+                                                <option value="Large">Build</option>
+                                                <option value="Medium">Run</option>
+                                            </select>
+                                            &nbsp;Project
+                                            Team&nbsp; &nbsp;
+                                            <select ng-model="nouvelProject.team">
+                                                <option value="DGT">AWL-FS-EQU-COO-OPE-OC-PM-PT3</option>
+                                                <option value="SBA">AWL-FS-EQU-COO-OPE-OC-PM-PM</option>
+                                                <option value="2">AWL-FS-EQU-COO-OPE-OC-PM</option>
+                                                <option value="3">AWL-EQWL-COO-OPE-OSO-IA-CS</option>
+                                                <option value="9">AWL-EQWL-COO-OPE-OSO-IA-CS</option>
+                                                <option value="9">AWL-EQWL-COO-OPE-TE-S2-OT4</option>
+                                            </select>
+                                            &nbsp;&nbsp;Firstname &nbsp;<input
+                                                    ng-model="nouvelProject.pm_firstname"> &nbsp; &nbsp;
+                                            <label>Lastname
+                                                &nbsp;</label><input ng-model="nouvelProject.pm_lastname"><br>
+                                            <br>
+                                            &nbsp;<label>Owner Code
+                                                </label>&nbsp; &nbsp;
+                                            <select ng-model="nouvelProject.pm_code">
+                                                <option value="DGT">DGT</option>
+                                                <option value="SBA">SBA</option>
+                                                <option value="CED">CED</option>
+                                                <option value="PT1">PT1</option>
+                                                <option value="MRP">MRP</option>
+                                                <option value="EHT">EHT</option>
+                                            </select>
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp;&nbsp;
+                                            Domain &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                            <input ng-model="nouvelProject.d_domain">&nbsp;&nbsp;Executive/Sponsor
+                                            name&nbsp;<input ng-model="nouvelProject.sponsor_name">
+                                            &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp;&nbsp;<br>
+                                            <br>
+                                            Type &nbsp;
+                                            <select ng-model="nouvelProject.type">
+                                                <option value="Large">Large</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Small">Small</option>
+                                            </select>
+                                            &nbsp;Priority&nbsp;
+                                            <select ng-model="nouvelProject.prio">
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                            &nbsp; Country
+                                            <select ng-model="nouvelProject.country">
+                                                <option value="FRA">FRA</option>
+                                                <option value="BEL">BEL</option>
+                                                <option value="DEU">DEU</option>
+                                                <option value="ITA">ITA</option>
+                                                <option value="NLD">NLD</option>
+                                                <option value="ESP">ESP</option>
+                                            </select>
+                                            &nbsp; &nbsp; &nbsp; IPP Tag &nbsp;
+                                            <select ng-model="nouvelProject.ipp_tag" name="FRA">
+                                                <option value="Engagement">?</option>
+                                                <option value="To Start">EW17-18A</option>
+                                                <option value="Ongoing">EW17-18B</option>
+                                                <option value="Pending">EW17-18D</option>
+                                            </select>
+                                            <br>
+                                            <br>
+                                            Internal Code To <input ng-model="nouvelProject.codeto">
+                                            &nbsp; OTP Code(NESSIE) &nbsp;
+                                            &nbsp;<input ng-model="nouvelProject.ne_code_otp"><br>
+                                            <br>
+                                            OTP Title &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="nouvelProject.pname">
+                                            &nbsp;Subtitle(Project,Stage,Other) &nbsp; &nbsp; <input
+                                                    ng-model="nouvelProject.stage"><br>
+                                        </fieldset>
+                                    </div>
+                                        <br>
+                                        <fieldset data-role="collapsible">
+                                            <legend>Project Constraints and milestones</legend>
+                                            Begin&nbsp; &nbsp;<input ng-model="nouvelProject.begin">
+                                            &nbsp; &nbsp; &nbsp; &nbsp;Initial Go live &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                ng-model="nouvelProject.golive"> &nbsp; &nbsp;
+                                            &nbsp;<span style="font-weight: bold;">Project
+Follow-up</span> &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp;Status &nbsp;
+                                            <select ng-model="nouvelProject.status">
+                                                <option value="Engagement">Engagement</option>
+                                                <option value="To Start">To Start</option>
+                                                <option value="Ongoing">Ongoing</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Standby">Standby</option>
+                                                <option value="BuildToRun">BuildToRun</option>
+                                                <option value="To close">To close</option>
+                                                <option value="Closed">Closed</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                            &nbsp; &nbsp; Work Priority &nbsp; &nbsp;
+                                            <select ng-model="nouvelProject.prio_week">
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                            <br>
+                                            <br>
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp;&nbsp; R/A/G
+                                            &nbsp;Status &nbsp;
+                                            <select name="FRA">
+                                            </select>
+                                            Risk Level&nbsp;
+                                            <select ng-model="nouvelProject.risk_level">
+                                                <option value="Null">0-Null</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="high">high</option>
+                                                <option value="Critical">Critical</option>
+                                            </select>
+                                            <br>
+                                            &nbsp;Initial forecast <input
+                                                ng-model="nouvelProject.init_forecast"> &nbsp;
+                                            &nbsp; Build
+                                            Rate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; &nbsp;&nbsp; <input
+                                                ng-model="nouvelProject.build_rate"> <br>
+                                            <br>
+                                            End &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp; <input ng-model="nouvelProject.end">
+                                            &nbsp; &nbsp; &nbsp; Reestimated GO Live <input
+                                                ng-model="nouvelProject.chg_live"><br>
+                                            <br>
+                                        </fieldset>
+                                        <br>
+                                        <fieldset>
+                                            <legend>Initial Technical Delivery milestones</legend>
+                                            <br>
+                                            DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                ng-model="nouvelProject.dev"> &nbsp; &nbsp;
+                                            RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                ng-model="nouvelProject.rci"> &nbsp; &nbsp;
+                                            &nbsp;RCE/EUA &nbsp;<input ng-model="nouvelProject.rce"><br>
+                                            <br>
+                                            RCT/TUA <input ng-model="nouvelProject.rct">
+                                            &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                            &nbsp;&nbsp;<input ng-model="nouvelProject.pprod">
+                                            &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                ng-model="nouvelProject.prod"><br>
+                                            <br>
+                                            DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                ng-model="nouvelProject.drs"> &nbsp; &nbsp; DRS
+                                            Test &nbsp; &nbsp; &nbsp; <input
+                                                ng-model="nouvelProject.testdrs"><br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div>
+                                </div>
+                                <fieldset>
+                                    <legend>Technical Delivery milestones</legend><br>
+                                    DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                        ng-model="nouvelProject.devd"> &nbsp; &nbsp;
+                                    RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                        ng-model="nouvelProject.rcid"> &nbsp; &nbsp;
+                                    &nbsp;RCE/EUA &nbsp;<input ng-model="nouvelProject.rced"><br>
+                                    <br>
+                                    RCT/TUA <input ng-model="nouvelProject.rctd">
+                                    &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                    &nbsp;&nbsp;<input ng-model="nouvelProject.pprodd">
+                                    &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                        ng-model="nouvelProject.prodd"><br>
+                                    <br>
+                                    DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                        ng-model="nouvelProject.drsd"> &nbsp; &nbsp; DRS
+                                    Test &nbsp; &nbsp; &nbsp; <input
+                                        ng-model="nouvelProject.testdrsd"><br>
+                                    <br>
+                                    <br>
+                                    <fieldset>
+                                        <legend>Comments/remarks</legend>
+                                        <textarea ng-model="nouvelProject.comment" rows="4"
+                                                  cols="300"></textarea>
+                                        <div class="class=" col-sm-3="" col-md-6=""><br>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </fieldset>
+                                </fieldset>
+                <input type="submit" class="btn btn-success" ng-click="ajouterProject()" value="Add">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            </div>
+                        </div>
+                </div>
+            </form>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editProjectModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div>
+                                <div class="form-group">
+                                            <fieldset>
+                                                <legend class='togvis'>+/-</legend>
+                                                <label>Classification
+                                                &nbsp;</label>
+                                                <select ng-model="project.prj_type">
+                                                    <option value="Large">Build</option>
+                                                    <option value="Medium">Run</option>
+                                                </select>
+                                                &nbsp
+                                                &nbsp;&nbsp;Project Team : &nbsp;&nbsp
+                                              <div ng-model="project.pm_team">{{selectedManager.pm_team}}</div>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                                &nbsp;&nbsp;Firstname : &nbsp;&nbsp;
+                                                <div ng-model="project.pm_firstname">{{selectedManager.pm_firstname}}</div> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                                        <label>Lastname : &nbsp; &nbsp;
+                                                    &nbsp;</label><div ng-model="project.pm_lastname">{{selectedManager.pm_lastname}}</div><br/>
+                                                <br>
+                                                &nbsp;<label>Owner Code
+                                                     </label>&nbsp; &nbsp;
+                                                <select ng-model="selectedManager" ng-options="x.pm_code for x in managers">
+                                                </select>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;&nbsp;
+                                                Domain &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                                <select ng-model="selectedDomain" ng-model="project.d_domain"  ng-options="x.d_domain for x in projects">
+
+                                                </select>
+                                                &nbsp;&nbsp;Executive/Sponsor
+                                                name&nbsp;<input ng-model="project.sponsor_name">
+                                                &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp;&nbsp;<br>
+                                                <br>
+                                                Type &nbsp;
+                                                <select ng-model="project.type">
+                                                    <option value="Large">Large</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Small">Small</option>
+                                                </select>
+                                                &nbsp;Priority&nbsp;
+                                                <select ng-model="project.prio">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="9">9</option>
+                                                </select>
+                                                &nbsp; Country
+                                                <select ng-model="project.country">
+                                                    <option value="FRA">FRA</option>
+                                                    <option value="BEL">BEL</option>
+                                                    <option value="DEU">DEU</option>
+                                                    <option value="ITA">ITA</option>
+                                                    <option value="NLD">NLD</option>
+                                                    <option value="ESP">ESP</option>
+                                                </select>
+                                                &nbsp; &nbsp; &nbsp; IPP Tag &nbsp;
+                                                <select ng-model="project.ipp_tag" name="FRA">
+                                                    <option value="Engagement">?</option>
+                                                    <option value="To Start">EW17-18A</option>
+                                                    <option value="Ongoing">EW17-18B</option>
+                                                    <option value="Pending">FPL15-25</option>
+                                                    <option value="Pending">FPL15-23</option>
+                                                    <option value="Pending">FPL15-5</option>
+                                                    <option value="Pending">FPL15-29</option>
+                                                    <option value="Pending">FPL15-29</option>
+                                                    <option value="Pending">EW17-18A</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                Internal Code To <input ng-model="project.codeto">
+
+                                                    &nbsp;&nbsp;OTP Title:    &nbsp; &nbsp;
+                                                    <div ng-model="project.pname">{{selectedCode.pname}}</div><br/>&nbsp;&nbsp;
+                                                <br>
+                                                &nbsp; OTP Code(NESSIE) &nbsp;
+                                                &nbsp;
+                                                <select  ng-model="selectedCode" ng-model="project.ne_code_otp" ng-options="x.ne_code_otp for x in projects"></select>
+
+                                                &nbsp;Subtitle(Project,Stage,Other) &nbsp; &nbsp; <input
+                                                        ng-model="project.stage"><br>
+                                            </fieldset>
+                                            <br>
+                                            <fieldset>
+                                                <legend class='togvis'>Project Constraints and milestones</legend>
+                                                Begin&nbsp; &nbsp;<input ng-model="project.begin">
+                                                &nbsp; &nbsp; &nbsp; &nbsp;Initial Go live &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="project.golive"> &nbsp; &nbsp;
+                                                &nbsp;<span style="font-weight: bold;">Project
+Follow-up</span> &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;Status &nbsp;
+                                                <select ng-model="project.status">
+                                                    <option value="Engagement">Engagement</option>
+                                                    <option value="To Start">To Start</option>
+                                                    <option value="Ongoing">Ongoing</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Standby">Standby</option>
+                                                    <option value="BuildToRun">BuildToRun</option>
+                                                    <option value="To close">To close</option>
+                                                    <option value="Closed">Closed</option>
+                                                    <option value="Cancelled">Cancelled</option>
+                                                </select>
+                                                &nbsp; &nbsp; Work Priority &nbsp; &nbsp;
+                                                <select ng-model="project.prio_week">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp;&nbsp; R/A/G
+                                                &nbsp;Status &nbsp;
+                                                <select ng-model="project.rag">
+                                                    <option value="R">R</option>
+                                                    <option value="A">A</option>
+                                                    <option value="G">G</option>
+                                                </select>
+                                                Risk Level&nbsp;
+                                                <select ng-model="project.risk_level">
+                                                    <option value="Null">0-Null</option>
+                                                    <option value="Medium">1-low</option>
+                                                    <option value="Medium">2-Medium</option>
+                                                    <option value="high">3-high</option>
+                                                    <option value="Critical">4-Critical</option>
+                                                </select>
+                                                <br>
+                                                &nbsp;Initial forecast <input
+                                                    ng-model="project.init_forecast"> &nbsp;
+                                                &nbsp; Build
+                                                Rate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;&nbsp; <input
+                                                    ng-model="project.build_rate"> <br>
+                                                <br>
+                                                End &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; <input ng-model="project.end">
+                                                &nbsp; &nbsp; &nbsp; Reestimated GO Live <input
+                                                    ng-model="project.chg_live"><br>
+                                                <br>
+                                            </fieldset>
+                                            <br>
+                                            <fieldset>
+                                                <legend class='togvis'>Initial Technical Delivery milestones</legend>
+                                                <br>
+                                                DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="project.dev"> &nbsp; &nbsp;
+                                                RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="project.rci"> &nbsp; &nbsp;
+                                                &nbsp;RCE/EUA &nbsp;<input ng-model="project.rce"><br>
+                                                <br>
+                                                RCT/TUA <input ng-model="project.rct">
+                                                &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                                &nbsp;&nbsp;<input ng-model="project.pprod">
+                                                &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="project.prod"><br>
+                                                <br>
+                                                DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                                    ng-model="project.drs"> &nbsp; &nbsp; DRS
+                                                Test &nbsp; &nbsp; &nbsp; <input
+                                                    ng-model="project.testdrs"><br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <fieldset>
+                                        <legend class='togvis'>Technical Delivery milestones</legend>
+                                       <br>
+                                        DEV &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="project.devd"> &nbsp; &nbsp;
+                                        RCI/IUA &nbsp; &nbsp; &nbsp; &nbsp; <input
+                                            ng-model="project.rcid"> &nbsp; &nbsp;
+                                        &nbsp;RCE/EUA &nbsp;<input ng-model="project.rced"><br>
+                                        <br>
+                                        RCT/TUA <input ng-model="project.rctd">
+                                        &nbsp; &nbsp; Pre-PROD &nbsp; &nbsp;
+                                        &nbsp;&nbsp;<input ng-model="project.pprodd">
+                                        &nbsp; &nbsp; PROD &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="project.prodd"><br>
+                                        <br>
+                                        DRS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input
+                                            ng-model="project.drsd"> &nbsp; &nbsp; DRS
+                                        Test &nbsp; &nbsp; &nbsp; <input
+                                            ng-model="project.testdrsd"><br>
+                                        <br>
+                                        <br>
+                                        <fieldset>
+                                            <legend class='togvis'>Comments/remarks</legend>
+                                            <textarea ng-model="project.comment" rows="4"
+                                                      cols="300"></textarea>
+
+                                                <br>
+                                                <br>
+                                        </fieldset>
+                                    </fieldset>
+                    <div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tbody>
+                           <tr>
+                                <th>F_PL_id</th>
+                                <th>Week_Selected</th>
+                                <th>Week_Number</th>
+                                <th>Resource Type</th>
+                                <th>MD_forecast</th>
+                                <th>MD_arbitration</th>
+                                <th>MD_delivred</th>
+                                <th>Critical Level</th>
+                            </tr>
+
+                        <tr ng-repeat="res in ressources">
+                            <td>{{res.f_pl_id}}</td>
+                            <td>{{res.week_selected}}</td>
+                            <td>{{res.week_number}}</td>
+                            <td>{{res.resource_type}}</td>
+                            <td>{{res.md_forecast}}</td>
+                            <td>{{res.md_arbitration}}</td>
+                            <td>{{res.md_delivred}}</td>
+                            <td>{{res.critical_level}}</td>
+
+                        </tr>
+                            </thead>
+                            </tbody>
+                        </table>
+                    </div>
+                        <input  type="submit" class="btn btn-info" id="refresh"  ng-click="validerEditionProject()" value="Save">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+
+
+        </div>
+
+
+</div>
+</div>
+
+            </form>
+<script>
+    $(function() {
+        $('#mySelectJQ').change(function() {
+            $('#JQResult').html('');
+            $('option:selected', $(this)).each(function() {
+                $('#JQResult').append(
+                    $('<input name="site"/>').val($(this).val())
+                );
+            });
+        });
+
+        $('#mySelectJQ').blur(function() {
+            $('#JQResultBlur').html('');
+            $('option:selected', $(this)).each(function() {
+                $('#JQResultBlur').append(
+                    $('<input name="site"/>').val($(this).val())
+                );
+            });
+        });
+    });
+</script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.managers = [
+            {pm_code : "CPI", pm_firstname : "PALCOWSKI", pm_lastname : "ooo", pm_team:" AWL-CTO-TO-CISS-CIS-STS-HSMA"},
+            {pm_code : "JPU", pm_firstname : "PACQUEU", pm_lastname : "Julien", pm_team:" AWL-EQWL-COO-OPE-TE-S2-OT4"},
+            {pm_code : "CPT", pm_firstname : "PHILBERT", pm_lastname : "Christophe", pm_team:" AWL-CTO-TO-CISS-CIS-STS-HSMA"},
+        ];
+    });
+</script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.projects = [
+            {code_otp : "CPI", pname:"HHKKKH"},
+            {code_otp : "JPU", pname : "PACQUEU"},
+            {code_otp : "CPT", pname : "PHILBERT"},
+        ];
+    });
+</script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.domains = ["PRO-FR-PPC-BOO", "PRO-FR-PPC", "PRO-FR-PPC-PPI", "SATI", "SIPS", "PAY-SEPA-OBEP"  ];
+    });
+</script>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.projects = ["?", "FPL15-25", "FPL15-23", "FPL15-25", "FPL15-29", "EW17-O04"  ];
+    });
+</script>
+<script>
+    $('#refresh').on('click', function() {
+        location.reload();
+    });
+</script>
+
+
+<!-- Delete Modal HTML -->
+<div id="deleteManagerModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Project </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default"  ng-click="supprimerProject()" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/app.js"></script>

@@ -1,0 +1,266 @@
+.table-wrapper-2 {
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+body {
+    color: #404E67;
+    background: #F5F7FA;
+    font-family: 'Open Sans', sans-serif;
+}
+.table-wrapper {
+    width: 700px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+}
+.table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+.table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+.table-title .add-new i {
+    margin-right: 4px;
+}
+table.table {
+    table-layout: fixed;
+}
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: 100px;
+}
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}
+table.table td a.add {
+    color: #27C46B;
+}
+table.table td a.edit {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+}
+table.table td i {
+    font-size: 19px;
+}
+table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+table.table .form-control.error {
+    border-color: #f50000;
+}
+table.table td .add {
+    display: none;
+}
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+.container {
+    margin-top: 20px;
+}
+.page {
+    display: none;
+}
+.page-active {
+    display: block;
+}
+
+.pagination { display: inline-block; }
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination a:hover:not(.active) { background-color: #ddd; }
+
+
+
+
+a[ ng-click ] {
+    color: red ;
+    cursor: pointer ;
+    text-decoration: underline ;
+}
+
+div.m-modals {
+    background-color: rgba( 0, 0, 0, 0.8 ) ;
+    bottom: 0px ;
+    left: 0px ;
+    position: fixed ;
+    right: 0px ;
+    top: 0px ;
+}
+
+div.m-modals.ng-hide {
+    background-color: rgba( 0, 0, 0, 0 );
+}
+
+div.m-modals.ng-hide-add.ng-hide-add-active,
+div.m-modals.ng-hide-remove.ng-hide-remove-active {
+    transition: 250ms ease all ;
+}
+
+div.m-modals > .modal {
+    background-color: #FAFAFA ;
+    border-radius: 3px 3px 3px 3px ;
+    box-sizing: border-box ;
+    -moz-box-sizing: border-box ;
+    padding: 20px 20px 20px 20px ;
+    position: fixed ;
+    left: 50% ;
+    margin-left: -200px ;
+    top: 200px ;
+    width: 400px ;
+}
+
+div.m-modals.ng-hide > .modal.ng-enter {
+    top: -200px ;
+    transition: 250ms ease top ;
+}
+
+div.m-modals.ng-hide > .modal.ng-enter.ng-enter-active {
+    top: 200px ;
+}
+
+a.jump {
+    color: #999999 ;
+}
+
+a.jump:hover {
+    background-color: gold ;
+    color: #000000 ;
+}
+
+
+.wrapper{
+    margin: 60px auto;
+    text-align: center;
+}
+h1{
+    margin-bottom: 1.25em;
+}
+#pagination-demo{
+    display: inline-block;
+    margin-bottom: 1.75em;
+}
+#pagination-demo li{
+    display: inline-block;
+}
+
+.page-content{
+    background: #eee;
+    display: inline-block;
+    padding: 10px;
+    width: 100%;
+    max-width: 660px;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    text-align:center;
+}
+
+body {
+    background-color: #fafafa;
+}
+
+table {
+    color: #333;
+    font-size: .9em;
+    font-weight: 300;
+    line-height: 40px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #ed1c40;
+    width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.16);
+    border-radius: 2px;
+}
+
+th {
+    background: #ed1c40;
+    color: #fff;
+    border: none;
+}
+
+tr:hover:not(th) {background-color: rgba(237,28,64,.1);}
+
+
+input[type="button"] {
+    transition: all .3s;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+input[type="button"]:not(.active) {
+    background-color:transparent;
+}
+
+.active {
+    background-color: #ff4d4d;
+    color :#fff;
+}
+
+input[type="button"]:hover:not(.active) {
+    background-color: #ddd;
+}
+
+
+
+
+
